@@ -1,0 +1,6 @@
+name: ${project.artifactId}
+main: com.fadecloud.packetentityapi.plugin.PacketEntityAPI
+version: ${project.version}
+api-version: 1.18
+depend: [ProtocolLib]
+author: Eliaseeg
