@@ -50,10 +50,10 @@ Some of the entity features are:
 
 All of the magic is taken care of in the **CustomEntity** and **PacketWrapper** classes. This is where the entities, methods and useful stuff is inside. We have the wrappers package that contains all the PacketWrapper children, these represent a different packet that is needed to be sent to the client in order to get what we need for the entity to work as we expect to.
 
-## Extending Party Crackers and Rewards
+## Extending PacketWrapper
 As mentioned before, all you need to do is create a class that extends PacketWrapper. This will give you a CustomEntity object that you can use to execute the packets to.
 
-It is pretty easy and straightforward. More stuff can be added such as Entity hit and what not.
+It is pretty easy and straightforward. More stuff can be added such as entity hit, and what not.
 ## Extra info and dependencies.
 
 - Tested against Java 17, Minecraft 1.18.2 though it should work from 1.15 - 1.18.2 as some fields in the move packet were changed from integers to shorts.
