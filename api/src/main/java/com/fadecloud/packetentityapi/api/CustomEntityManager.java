@@ -100,7 +100,6 @@ public class CustomEntityManager {
                 .filter(entry -> plugin.getName().equals(entry.getValue().getName()))
                 .forEach(entry -> entry.getKey().destroyEntity());
         this.entities.entrySet().removeIf(entry -> plugin.getName().equals(entry.getValue().getName()));
-        System.out.println(this.entities);
     }
 
     /**
