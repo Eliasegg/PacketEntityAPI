@@ -38,7 +38,7 @@ public class GeneralListener implements Listener {
             Random ran = new Random();
             String mob = mobList[ran.nextInt(mobList.length)];
 
-            CustomEntity entity = CustomEntityManager.getManager().createEntity(PacketEntityType.valueOf(mob), event.getPlayer().getLocation().clone().add(2, 0, 0), UUID.randomUUID()); // Let's spawn a random mob in our location. We add +2 to the X location so it is not on top of us. We can also declare its UUID for later retrieval.
+            CustomEntity entity = CustomEntityManager.getManager().createEntity(PacketEntityAPI.getInstance(), PacketEntityType.valueOf(mob), event.getPlayer().getLocation().clone().add(2, 0, 0), UUID.randomUUID()); // Let's spawn a random mob in our location. We add +2 to the X location so it is not on top of us. We can also declare its UUID for later retrieval.
 
             entity.addToViewerList(event.getPlayer()); // Adds the player to the viewers list.
             entity.addDisplayName("TheBest!"); // We can set a display name.
@@ -50,7 +50,7 @@ public class GeneralListener implements Listener {
             CustomEntity entity = CustomEntityManager.getManager().getFirstEntity(); // Getting the first CustomEntity object stored.
 
             if (entity != null) {
-                CustomEntityManager.getManager().removeAll();
+                CustomEntityManager.getManager().removeAll(PacketEntityAPI.getInstance());
             }
         }
 

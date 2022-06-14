@@ -2,9 +2,11 @@ package com.fadecloud.packetentityapi.api;
 
 import com.fadecloud.packetentityapi.api.wrappers.PacketEntityType;
 import org.bukkit.Location;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -13,7 +15,7 @@ import java.util.UUID;
  */
 public class CustomEntityManager {
 
-    private Set<CustomEntity> entities = new HashSet<>();
+    private Map<CustomEntity, JavaPlugin> entities = new HashMap<>();
 
     public static CustomEntityManager cem;
 
@@ -33,9 +35,9 @@ public class CustomEntityManager {
      * @param uuid UUID attached to the entity.
      * @return CustomEntity The Custom Entity object for chaining purposes.
      */
-    public CustomEntity createEntity(PacketEntityType type, Location location, UUID uuid) {
+    public CustomEntity createEntity(JavaPlugin plugin, PacketEntityType type, Location location, UUID uuid) {
         CustomEntity entity = new CustomEntity().create(type, location, uuid);
-        this.entities.add(entity);
+        this.entities.put(entity, plugin);
         return entity;
     }
 
@@ -45,7 +47,11 @@ public class CustomEntityManager {
      * @return CustomEntity First entity in the list.
      */
     public CustomEntity getFirstEntity() {
-        return entities.stream().findFirst().orElse(null);
+        Optional<CustomEntity> customEntity = this.entities.keySet().stream().findFirst();
+        if (customEntity.isPresent()) {
+            return customEntity.get();
+        }
+        return null;
     }
 
     /**
@@ -55,7 +61,11 @@ public class CustomEntityManager {
      * @return CustomEntity The custom entity associated with the UUID.
      */
     public CustomEntity get(UUID uuid) {
-        return this.entities.stream().filter(customEntity -> customEntity.getUUID().equals(uuid)).findFirst().orElse(null);
+        Optional<CustomEntity> customEntity = this.entities.keySet().stream().filter(entity -> entity.getUUID().equals(uuid)).findFirst();
+        if (customEntity.isPresent()) {
+            return customEntity.get();
+        }
+        return null;
     }
 
     /**
@@ -65,15 +75,32 @@ public class CustomEntityManager {
      * @return CustomEntity The custom entity associated with the ID.
      */
     public CustomEntity get(int id) {
-        return this.entities.stream().filter(customEntity -> customEntity.getId() == id).findFirst().orElse(null);
+        Optional<CustomEntity> customEntity = this.entities.keySet().stream().filter(entity -> entity.getId() == id).findFirst();
+        if (customEntity.isPresent()) {
+            return customEntity.get();
+        }
+        return null;
     }
 
     /**
      * Removes all custom entity objects from this plugin.
      */
     public void removeAll() {
-        this.entities.stream().forEach(customEntity -> customEntity.destroyEntity());
+        this.entities.keySet().stream().forEach(customEntity -> customEntity.destroyEntity());
         this.entities.clear();
+    }
+
+    /**
+     * Removes all entities spawned by a plugin.
+     *
+     * @param plugin The plugin that spawned the entities.
+     */
+    public void removeAll(JavaPlugin plugin) {
+        this.entities.entrySet().stream()
+                .filter(entry -> plugin.getName().equals(entry.getValue().getName()))
+                .forEach(entry -> entry.getKey().destroyEntity());
+        this.entities.entrySet().removeIf(entry -> plugin.getName().equals(entry.getValue().getName()));
+        System.out.println(this.entities);
     }
 
     /**
