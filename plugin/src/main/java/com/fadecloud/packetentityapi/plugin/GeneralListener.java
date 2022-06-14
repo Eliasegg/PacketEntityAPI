@@ -28,7 +28,7 @@ public class GeneralListener implements Listener {
         Player name = event.getPlayer();
         name.sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "PacketEntityAPI test!");
         name.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "Right click " + ChatColor.RESET + ChatColor.GRAY + "the air to spawn a Zombie, Panda, Blaze or Bee that follows you around.");
-        name.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Left click " + ChatColor.RESET + ChatColor.GRAY + "a block to destroy the first entity in the list.");
+        name.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "Left click " + ChatColor.RESET + ChatColor.GRAY + "a block to destroy all the entities in the list.");
     }
 
     @EventHandler
