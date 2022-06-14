@@ -3,8 +3,8 @@ package com.fadecloud.packetentityapi.api;
 import com.fadecloud.packetentityapi.api.wrappers.PacketEntityType;
 import org.bukkit.Location;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 /**
@@ -13,7 +13,7 @@ import java.util.UUID;
  */
 public class CustomEntityManager {
 
-    private List<CustomEntity> entities = new ArrayList<>();
+    private Set<CustomEntity> entities = new HashSet<>();
 
     public static CustomEntityManager cem;
 
@@ -66,6 +66,14 @@ public class CustomEntityManager {
      */
     public CustomEntity get(int id) {
         return this.entities.stream().filter(customEntity -> customEntity.getId() == id).findFirst().orElse(null);
+    }
+
+    /**
+     * Removes all custom entity objects from this plugin.
+     */
+    public void removeAll() {
+        this.entities.stream().forEach(customEntity -> customEntity.destroyEntity());
+        this.entities.clear();
     }
 
     /**

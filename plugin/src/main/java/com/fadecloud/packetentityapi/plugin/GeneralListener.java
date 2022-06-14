@@ -50,10 +50,8 @@ public class GeneralListener implements Listener {
             CustomEntity entity = CustomEntityManager.getManager().getFirstEntity(); // Getting the first CustomEntity object stored.
 
             if (entity != null) {
-                entity.removeFromViewerList(event.getPlayer()); // We can remove individual players from the viewer list (not needed if you're going to destroy it)
-                entity.destroy(); // Destroy the entity, effectively deleting it from the manager.
+                CustomEntityManager.getManager().removeAll();
             }
-
         }
 
     }

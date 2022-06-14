@@ -89,6 +89,11 @@ public class CustomEntity implements EntityBase {
         CustomEntityManager.getManager().remove(this.entityId);
     }
 
+    protected void destroyEntity() {
+        EntityVisibility visibility = new EntityVisibility(this);
+        visibility.destroy().send();
+    }
+
     @Override
     public void teleport(Location location, boolean onGround) {
         EntityTeleport teleport = new EntityTeleport(this);
